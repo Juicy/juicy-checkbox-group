@@ -1,0 +1,189 @@
+﻿<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="juicy-checkbox-group-item.html"/>
+
+<dom-module id="juicy-checkbox-group">
+    <template>
+        <style>
+            #container {
+                padding: 0px 10px;
+            }
+
+            #checkboxList {
+                margin: 5px 0 0 0;
+            }
+
+            #checkboxGroupNameContainer {
+                width: 100%;
+            }
+
+            #checkboxGroupNameEditor {
+                overflow-y: auto;
+                resize: none;
+                word-wrap: break-word;
+                height: 20px;
+                line-height: 20px;
+                border: 1px solid transparent;
+                border-radius: 4px;
+                width: 100%;
+            }
+
+            #checkboxGroupNameEditor:hover {
+                outline: 0;
+                border: 1px solid #c5e7f3;
+            }
+
+            #checkboxGroupNameEditor:focus {
+                border-color: #66afe9;
+                outline: 0;
+                border: 1px solid #00bfff;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+            }
+
+            #checkboxListContainer {
+                display: flex;
+            }
+
+            #checkboxListContainer .icon {
+                display: none;
+                cursor: pointer;
+            }
+
+            #checkboxListContainer:hover .icon[data-editable] {
+                color: #b1b1b1;
+                display: flex;
+            }
+
+            #checkboxListContainer .icon[data-editable]:hover {
+                color: #DD4B39;
+            }
+
+            #checkboxListItem {
+                flex: 1;
+                margin: 0 7px 0 0;
+            }
+
+            #checkboxListDelete {
+                width: 20px;
+                margin: auto;
+            }
+
+            #checkboxListDelete .icon[data-editable] {
+                --iron-icon-height: 20px;
+                --iron-icon-width: 20px;
+            }
+
+            #checkboxListDelete .icon {
+                --iron-icon-height: 20px;
+                --iron-icon-width: 20px;
+            }
+        </style>
+        <div id="container">
+            <div id="checkboxGroupNameContainer">
+                <template is="dom-if" if="{{editable}}">
+                    <textarea id="checkboxGroupNameEditor" placeholder="{{namePlaceholder}}" on-keyup="calculateEditorHeight" rows="1" value="{{name::input}}">{{name}}</textarea>
+                </template>
+                <template is="dom-if" if="{{!editable}}">
+                    <div id="checkboxGroupName">{{name}}</div>
+                </template>
+            </div>
+            <div id="checkboxList">
+                <template is="dom-repeat" items="{{items}}">
+                    <template is="dom-if" if="true">
+                    <div id="checkboxListContainer">
+                        <div id="checkboxListItem">
+                            <juicy-checkbox-group-item
+                                id="checkboxItems-{{index}}"
+                                position="{{getItemIndex(index)}}"
+                                label="{{item.label}}"
+                                checked="{{item.checked}}"
+                                checkable="{{checkable}}"
+                                editable="{{editable}}">
+                            </juicy-checkbox-group-item>
+                        </div>
+                        <div id="checkboxListDelete">
+                            <iron-icon class="icon" data-editable$="{{editable}}" icon="icons:clear" on-click="deleteItem"></iron-icon>
+                        </div>
+                    </div>
+                </template>
+                </template>
+            </div>
+        </div>
+    </template>
+</dom-module>
+<script>
+	'use strict';
+    Polymer({
+	    is: 'juicy-checkbox-group',
+	    properties: {
+	        name: { type: String, value: "", observable: true, notify: true},
+            namePlaceholder: {type: String, value: "Type group name here"},
+	        editable: { type: Boolean, value: false },
+	        checkable: { type: Boolean, value: false },
+	        items: {
+	            type: Array,
+	            value: function () {            
+	            },
+	            observable: true,
+                notify: true
+	        }
+	    },
+	    attached: function () {
+	        if (this.editable) {
+	            if (!this.items) {
+	                this.items = [];
+	            }
+
+	            if (!this.items.length) {
+	                this.push('items', { label: "" });
+	            }
+	        }
+	    },
+	    observers: [
+            'itemsChanged(items.*)'
+	    ],
+	    listeners: {
+	        'checkboxLabelEditorEnter': 'itemEnter',
+	    },
+	    itemEnter: function (e) {
+	        if (this.editable && e.detail.position < this.items.length) {
+	            this.$$('#checkboxItems-' + e.detail.position).focusEditor();
+	        }
+	    },
+	    itemsChanged: function () {
+	        if (!this.items) {
+	            return;
+	        }
+
+	        if (this.editable) {
+	            if (this.items[this.items.length - 1] && this.items[this.items.length - 1].label) {
+	                this.push('items', { label: "" });
+	            }
+
+	            if (this.items[this.items.length - 2] && !this.items[this.items.length - 2].label) {
+	                this.pop('items');
+	            }
+	        }
+	    },
+	    deleteItem: function (e) {
+	        if (this.editable && this.items.length > 1) {	            
+	            this.splice('items', e.model.index, 1);
+	        }
+	    },
+	    getItemIndex: function (index) {
+	        return index + 1;
+	    },
+	    isItemLast: function (index) {
+	        return this.items.length === index + 1;
+	    },
+	    calculateEditorHeight: function (e) {
+	        e.currentTarget.style.height = 'auto';
+	        e.currentTarget.style.height = e.currentTarget.scrollHeight - 4 + 'px';
+	    },
+	    shouldItemBeVisible: function(index) {
+	        return true;
+	    }
+	});
+</script>
+

@@ -1,0 +1,27 @@
+{
+  "name": "juicy-checkbox-group",
+  "version": "0.0.1",
+  "homepage": "https://github.com/Juicy/juicy-checkbox-group",
+  "authors": [
+    "Michał Nosek <mmnosek@gmail.com>"
+  ],
+  "description": "Polymer Element with GitHub Flavored Markdown (GFM) editor with file drop and paste functionality",
+  "keywords": [
+    "polymer",
+    "web-components",
+    "juicy",
+    "checkbox"
+  ],
+  "license": "MIT",
+  "main": "juicy-checkbox-group.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "index.html"
+  ],
+  "dependencies": {
+    "polymer": "polymer/polymer#~1.0.0",
+    "iron-icons": "polymerelements/iron-icons#^1.0.0"
+  }
+}

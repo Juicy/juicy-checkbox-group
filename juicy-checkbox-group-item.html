@@ -1,0 +1,169 @@
+﻿<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+
+<dom-module id="juicy-checkbox-group-item">
+    <template>
+        <style>
+            #container {
+                display: flex;
+                line-height: 24px;
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            #checkboxItemContainer {
+                margin: auto 0px auto 2px;
+            }
+
+            #checkboxItem {
+                background-color: #fff;
+                border: 1px solid #d6dadc;
+                border-bottom-color: #c4c9cc;
+                border-radius: 3px;
+                box-shadow: 0 2px 3px rgba(0, 0, 0, .1);
+                display: block;
+                height: 20px;
+                padding: 2px 2px;
+                width: 20px;
+                text-align: center;
+                line-height: 20px;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                -o-user-select: none;
+                user-select: none;
+                cursor: not-allowed;
+                color: #929292;
+            }
+
+            #checkboxItem .icon {
+                vertical-align: top;
+                --iron-icon-height: 22px;
+                --iron-icon-width: 22px;
+            }
+
+            #checkboxItem[data-checkable] {
+                cursor: pointer;
+                color: #000;
+            }
+
+            #checkboxItem:not([data-checked]) * {
+                display: none;
+            }
+
+            #checkboxItemLabelEditor {
+                overflow: hidden;
+                -moz-resize: none;
+                -ms-resize: none;
+                -o-resize: none;
+                resize: none;
+                word-wrap: break-word;
+                height: 20px;
+                line-height: 20px;
+                border: 1px solid transparent;
+                -ms-border-radius: 4px;
+                border-radius: 4px;
+                width: 100%;
+                display: block;
+            }
+
+            #checkboxItemLabelEditor:hover {
+                outline: 0;
+                border: 1px solid #c5e7f3;
+            }
+
+            #checkboxItemLabelEditor:focus {
+                outline: 0;
+                border: 1px solid #00bfff;
+                -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+            }
+
+
+
+            #checkboxItemLabel {
+                cursor: not-allowed;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                -o-user-select: none;
+                user-select: none;
+                min-height: 20px;
+                line-height: 20px;
+                -ms-border-radius: 4px;
+                border-radius: 4px;
+                width: 100%;
+                display: block;
+            }
+
+            #checkboxItemLabel[data-checkable] {
+                cursor: pointer;
+            }
+
+            #checkboxItemLabelContainer {
+                width: 100%;
+                padding: 0px 0px 0 10px;
+                margin: auto 0 auto 0;
+            }
+
+            #positionNumber {
+                margin: auto 2px auto 2px;
+                cursor: default;
+                width: 16px;
+            }
+        </style>
+        <div id="container">
+            <div id="positionNumber">{{position}}</div>
+            <div id="checkboxItemContainer">
+                <div id="checkboxItem" data-checkable$="{{checkable}}" data-checked$="{{checked}}" on-click="toggleCheckbox">
+                    <iron-icon class="icon" icon="icons:check"></iron-icon>
+                </div>
+            </div>
+            <div id="checkboxItemLabelContainer">
+                <template is="dom-if" if="{{editable}}">
+                    <textarea id="checkboxItemLabelEditor" on-keypress="editorKeyPress" value="{{label::input}}" on-keyup="calculateEditorHeight" placeholder="{{placeholder}}" rows="1">{{label}}</textarea>
+                </template>
+                <template is="dom-if" if="{{!editable}}">
+                    <div id="checkboxItemLabel" data-checkable$="{{checkable}}" on-click="toggleCheckbox">{{label}}</div>
+                </template>
+            </div>
+        </div>
+    </template>
+</dom-module>
+<script>
+	'use strict';
+    Polymer({
+	    is: 'juicy-checkbox-group-item',
+	    properties: {
+            position: {type: String, notify: true},
+	        label: { type: String, value: "", notify: true},
+	        checked: { type: Boolean, value: false, notify: true},
+	        checkable: { type: Boolean, notify: true},
+	        editable: { type: Boolean, value: false },
+            placeholder: {type: String, value: "Type item name here" }
+	    },
+	    toggleCheckbox: function() {
+	        if (this.checkable) {
+	            this.checked = !this.checked;
+	        }
+	    },
+	    editorKeyPress: function (e) {
+	        if (e.key == "Enter" || e.keyCode == 13) {
+	            e.preventDefault();
+	            this.fire('checkboxLabelEditorEnter', { "position": this.position });
+
+	        }
+	    },
+	    focusEditor: function () {
+	        if (this.editable) {                
+	            this.$$('#checkboxItemLabelEditor').focus();
+	            return true;
+	        }
+	        return false;
+	    },
+	    calculateEditorHeight: function (e) {
+	        e.currentTarget.style.height = 'auto';
+	        e.currentTarget.style.height = e.currentTarget.scrollHeight - 4 + 'px';
+	    }
+	});
+</script>
