@@ -131,15 +131,15 @@
     </template>
 </dom-module>
 <script>
-	'use strict';
+    'use strict';
     Polymer({
-	    is: 'juicy-checkbox-group-item',
-	    properties: {
-            position: {type: String, notify: true},
-	        label: { type: String, value: "", notify: true},
-	        checked: { type: Boolean, value: false, notify: true},
-	        checkable: { type: Boolean, notify: true},
-	        editable: { type: Boolean, value: false },
+        is: 'juicy-checkbox-group-item',
+        properties: {
+            position: { type: String, notify: true },
+            label: { type: String, value: "", notify: true },
+            checked: { type: Boolean, value: false, notify: true},
+            checkable: { type: Boolean, notify: true},
+            editable: { type: Boolean, value: false },
             placeholder: {type: String, value: "Type item name here" }
 	    },
 	    toggleCheckbox: function() {
@@ -151,7 +151,6 @@
 	        if (e.key == "Enter" || e.keyCode == 13) {
 	            e.preventDefault();
 	            this.fire('checkboxLabelEditorEnter', { "position": this.position });
-
 	        }
 	    },
 	    focusEditor: function () {

@@ -90,7 +90,6 @@
             </div>
             <div id="checkboxList">
                 <template is="dom-repeat" items="{{items}}">
-                    <template is="dom-if" if="true">
                     <div id="checkboxListContainer">
                         <div id="checkboxListItem">
                             <juicy-checkbox-group-item
@@ -107,24 +106,21 @@
                         </div>
                     </div>
                 </template>
-                </template>
             </div>
         </div>
     </template>
 </dom-module>
 <script>
-	'use strict';
+    'use strict';
     Polymer({
 	    is: 'juicy-checkbox-group',
 	    properties: {
-	        name: { type: String, value: "", observable: true, notify: true},
-            namePlaceholder: {type: String, value: "Type group name here"},
+	        name: { type: String, value: "", observable: true, notify: true },
+	        namePlaceholder: { type: String, value: "Type group name here" },
 	        editable: { type: Boolean, value: false },
 	        checkable: { type: Boolean, value: false },
 	        items: {
 	            type: Array,
-	            value: function () {            
-	            },
 	            observable: true,
                 notify: true
 	        }
@@ -144,7 +140,7 @@
             'itemsChanged(items.*)'
 	    ],
 	    listeners: {
-	        'checkboxLabelEditorEnter': 'itemEnter',
+	        'checkboxLabelEditorEnter': 'itemEnter'
 	    },
 	    itemEnter: function (e) {
 	        if (this.editable && e.detail.position < this.items.length) {
@@ -180,9 +176,6 @@
 	    calculateEditorHeight: function (e) {
 	        e.currentTarget.style.height = 'auto';
 	        e.currentTarget.style.height = e.currentTarget.scrollHeight - 4 + 'px';
-	    },
-	    shouldItemBeVisible: function(index) {
-	        return true;
 	    }
 	});
 </script>
