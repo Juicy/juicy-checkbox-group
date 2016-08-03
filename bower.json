@@ -5,7 +5,7 @@
   "authors": [
     "Michał Nosek <mmnosek@gmail.com>"
   ],
-  "description": "Polymer Element with GitHub Flavored Markdown (GFM) editor with file drop and paste functionality",
+  "description": "Polymer Element to create group of checkboxes",
   "keywords": [
     "polymer",
     "web-components",
