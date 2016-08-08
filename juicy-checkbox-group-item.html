@@ -36,20 +36,20 @@
                 color: #929292;
             }
 
-            #checkboxItem .icon {
-                vertical-align: top;
-                --iron-icon-height: 22px;
-                --iron-icon-width: 22px;
-            }
+			#checkboxItem .icon {
+				vertical-align: top;
+				--iron-icon-height: 20px;
+				--iron-icon-width: 20px;
+			}
 
-            #checkboxItem[data-checkable] {
-                cursor: pointer;
-                color: #000;
-            }
+			#checkboxItem[data-checkable] {
+				cursor: pointer;
+				color: #000;
+			}
 
-            #checkboxItem:not([data-checked]) * {
-                display: none;
-            }
+			#checkboxItem:not([data-checked]) * {
+				display: none;
+			}
 
             #checkboxItemLabelEditor {
                 overflow: hidden;
@@ -67,17 +67,17 @@
                 display: block;
             }
 
-            #checkboxItemLabelEditor:hover {
-                outline: 0;
-                border: 1px solid #c5e7f3;
-            }
+			#checkboxItemLabelEditor:hover {
+				outline: 0;
+				border: 1px solid #c5e7f3;
+			}
 
-            #checkboxItemLabelEditor:focus {
-                outline: 0;
-                border: 1px solid #00bfff;
-                -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
-                box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
-            }
+			#checkboxItemLabelEditor:focus {
+				outline: 0;
+				border: 1px solid #00bfff;
+				-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+				box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+			}
 
             #checkboxItemLabel {
                 cursor: not-allowed;
@@ -95,9 +95,9 @@
                 text-align: left;
             }
 
-            #checkboxItemLabel[data-checkable] {
-                cursor: pointer;
-            }
+			#checkboxItemLabel[data-checkable] {
+				cursor: pointer;
+			}
 
             #checkboxItemLabelContainer {
                 width: 100%;
@@ -110,15 +110,15 @@
                 margin: auto;
             }
 
-            #checkboxListDelete .icon[data-editable] {
-                --iron-icon-height: 20px;
-                --iron-icon-width: 20px;
-            }
+			#checkboxListDelete .icon[data-editable] {
+				--iron-icon-height: 20px;
+				--iron-icon-width: 20px;
+			}
 
-            #checkboxListDelete .icon {
-                --iron-icon-height: 20px;
-                --iron-icon-width: 20px;
-            }
+			#checkboxListDelete .icon {
+				--iron-icon-height: 20px;
+				--iron-icon-width: 20px;
+			}
 
             #container .delete-icon {
                 visibility: hidden;
@@ -129,7 +129,7 @@
 
             #container:hover .delete-icon[data-editable] {
                 color: #b1b1b1;
-                visibility:visible;
+                visibility: visible;
             }
 
             #container .delete-icon[data-editable]:hover {
@@ -141,6 +141,10 @@
                 cursor: default;
                 width: 16px;
             }
+
+            #checkboxItem, #checkboxItemLabelEditor, #checkboxItemLabel {
+                box-sizing: content-box;
+            }
         </style>
         <div id="container">
             <div id="positionNumber">{{position}}</div>
@@ -151,7 +155,7 @@
             </div>
             <div id="checkboxItemLabelContainer">
                 <template is="dom-if" if="{{editable}}">
-                    <textarea id="checkboxItemLabelEditor" on-keypress="editorKeyPress" value="{{label::input}}" on-keyup="calculateEditorHeight" placeholder="{{placeholder}}" rows="1">{{label}}</textarea>                    
+                    <textarea id="checkboxItemLabelEditor" on-keypress="editorKeyPress" value="{{label::input}}" on-keyup="calculateEditorHeight" placeholder="{{placeholder}}" rows="1">{{label}}</textarea>
                 </template>
                 <template is="dom-if" if="{{!editable}}">
                     <div id="checkboxItemLabel" data-checkable$="{{checkable}}" on-click="toggleCheckbox">{{label}}</div>
@@ -195,7 +199,7 @@
 	        }
 	    },
 	    focusEditor: function () {
-	        if (this.editable) {                
+	        if (this.editable) {
 	            this.$$('#checkboxItemLabelEditor').focus();
 	            return true;
 	        }
@@ -203,7 +207,7 @@
 	    },
 	    deleteItem: function() {
 	        this.fire('delete', { "position": this.position })
-	    },        
+	    },
 	    calculateEditorHeight: function (e) {
 	        e.currentTarget.style.height = 'auto';
 	        e.currentTarget.style.height = e.currentTarget.scrollHeight - 4 + 'px';
