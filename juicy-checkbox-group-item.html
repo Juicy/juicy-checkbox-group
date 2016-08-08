@@ -8,7 +8,7 @@
                 display: flex;
                 line-height: 24px;
                 width: 100%;
-                margin: 5px 0;
+                margin: 7px 0;
             }
 
             #checkboxItemContainer {
@@ -79,8 +79,6 @@
                 box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
             }
 
-
-
             #checkboxItemLabel {
                 cursor: not-allowed;
                 -webkit-user-select: none;
@@ -94,6 +92,7 @@
                 border-radius: 4px;
                 width: 100%;
                 display: block;
+                text-align: left;
             }
 
             #checkboxItemLabel[data-checkable] {
@@ -104,6 +103,37 @@
                 width: 100%;
                 padding: 0px 0px 0 10px;
                 margin: auto 0 auto 0;
+            }
+
+            #checkboxListDelete {
+                width: 20px;
+                margin: auto;
+            }
+
+            #checkboxListDelete .icon[data-editable] {
+                --iron-icon-height: 20px;
+                --iron-icon-width: 20px;
+            }
+
+            #checkboxListDelete .icon {
+                --iron-icon-height: 20px;
+                --iron-icon-width: 20px;
+            }
+
+            #container .delete-icon {
+                visibility: hidden;
+                cursor: pointer;
+                display: flex;
+                margin: 0 0 0 6px;
+            }
+
+            #container:hover .delete-icon[data-editable] {
+                color: #b1b1b1;
+                visibility:visible;
+            }
+
+            #container .delete-icon[data-editable]:hover {
+                color: #DD4B39;
             }
 
             #positionNumber {
@@ -121,12 +151,17 @@
             </div>
             <div id="checkboxItemLabelContainer">
                 <template is="dom-if" if="{{editable}}">
-                    <textarea id="checkboxItemLabelEditor" on-keypress="editorKeyPress" value="{{label::input}}" on-keyup="calculateEditorHeight" placeholder="{{placeholder}}" rows="1">{{label}}</textarea>
+                    <textarea id="checkboxItemLabelEditor" on-keypress="editorKeyPress" value="{{label::input}}" on-keyup="calculateEditorHeight" placeholder="{{placeholder}}" rows="1">{{label}}</textarea>                    
                 </template>
                 <template is="dom-if" if="{{!editable}}">
                     <div id="checkboxItemLabel" data-checkable$="{{checkable}}" on-click="toggleCheckbox">{{label}}</div>
                 </template>
             </div>
+            <template is="dom-if" if="{{editable}}">
+                <div id="checkboxListDelete">
+                    <iron-icon class="delete-icon" data-editable$="{{editable}}" icon="icons:clear" on-click="deleteItem"></iron-icon>
+                </div>
+            </template>
         </div>
     </template>
 </dom-module>
@@ -135,8 +170,8 @@
     Polymer({
         is: 'juicy-checkbox-group-item',
         properties: {
-            position: { type: String, notify: true },
-            label: { type: String, value: "", notify: true },
+            position: { type: String, notify: true, observable: true },
+            label: { type: String, value: "", notify: true, observable: true },
             checked: { type: Boolean, value: false, notify: true},
             checkable: { type: Boolean, notify: true},
             editable: { type: Boolean, value: false },
@@ -144,7 +179,13 @@
 	    },
 	    toggleCheckbox: function() {
 	        if (this.checkable) {
-	            this.checked = !this.checked;
+	            if (this.checked) {
+	                this.checked = false;
+	                this.fire('check', { "position": this.position });
+	            } else {
+	                this.checked = true;
+	                this.fire('uncheck', { "position": this.position });
+	            }
 	        }
 	    },
 	    editorKeyPress: function (e) {
@@ -160,6 +201,9 @@
 	        }
 	        return false;
 	    },
+	    deleteItem: function() {
+	        this.fire('delete', { "position": this.position })
+	    },        
 	    calculateEditorHeight: function (e) {
 	        e.currentTarget.style.height = 'auto';
 	        e.currentTarget.style.height = e.currentTarget.scrollHeight - 4 + 'px';
