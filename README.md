@@ -58,6 +58,7 @@ Name     | Options     | Default      | Description
 `checkable`         | *boolean*    | false        | Determines if checkbox can be checked (otherwise it's disabled)
 `editable`         | *boolean*    | false        | Switches item into editing mode (allows changing label)
 `placeholder`         | *string*    | Type item name here        | Label input placeholder, applies only if the item is in editing mode
+`disableCheckbox`         | *boolean*    | false        | Determines if checkbox is available for editing
 
 
 ## Events
