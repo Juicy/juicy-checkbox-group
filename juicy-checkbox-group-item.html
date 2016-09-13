@@ -148,7 +148,7 @@
         </style>
         <div id="container">
             <div id="positionNumber">{{position}}</div>
-			<template is="dom-if" if="{{!disableCheckbox}}">
+			<template is="dom-if" if="{{!checkboxHidden}}">
 				<div id="checkboxItemContainer">
 					<div id="checkboxItem" data-checkable$="{{checkable}}" data-checked$="{{checked}}" on-click="toggleCheckbox">
 						<iron-icon class="icon" icon="icons:check"></iron-icon>
@@ -183,7 +183,7 @@
             editable: { type: Boolean, value: false },
             placeholder: {type: String, value: "Type item name here" },
             checked: { type: Boolean, value: false, notify: true},
-			disableCheckbox: { type: Boolean, value: false }
+			checkboxHidden: { type: Boolean, value: false }
 	    },
 	    toggleCheckbox: function() {
 	        if (this.checkable) {
