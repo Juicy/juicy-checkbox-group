@@ -148,11 +148,13 @@
         </style>
         <div id="container">
             <div id="positionNumber">{{position}}</div>
-            <div id="checkboxItemContainer">
-                <div id="checkboxItem" data-checkable$="{{checkable}}" data-checked$="{{checked}}" on-click="toggleCheckbox">
-                    <iron-icon class="icon" icon="icons:check"></iron-icon>
-                </div>
-            </div>
+			<template is="dom-if" if="{{!checkboxHidden}}">
+				<div id="checkboxItemContainer">
+					<div id="checkboxItem" data-checkable$="{{checkable}}" data-checked$="{{checked}}" on-click="toggleCheckbox">
+						<iron-icon class="icon" icon="icons:check"></iron-icon>
+					</div>
+				</div>
+			</template>
             <div id="checkboxItemLabelContainer">
                 <template is="dom-if" if="{{editable}}">
                     <textarea id="checkboxItemLabelEditor" on-keypress="editorKeyPress" value="{{label::input}}" on-keyup="calculateEditorHeight" placeholder="{{placeholder}}" rows="1">{{label}}</textarea>
@@ -179,7 +181,9 @@
             checked: { type: Boolean, value: false, notify: true},
             checkable: { type: Boolean, notify: true},
             editable: { type: Boolean, value: false },
-            placeholder: {type: String, value: "Type item name here" }
+            placeholder: {type: String, value: "Type item name here" },
+            checked: { type: Boolean, value: false, notify: true},
+			checkboxHidden: { type: Boolean, value: false }
 	    },
 	    toggleCheckbox: function() {
 	        if (this.checkable) {
