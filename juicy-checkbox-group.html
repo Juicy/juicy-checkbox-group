@@ -75,6 +75,11 @@
 	            e.srcElement.nextElementSibling.focusEditor();
 	        }
 	    },
+	    focusNameEditor: function () {
+	        if (this.editable) {
+	            this.$$('#checkboxGroupNameEditor').focus();
+	        }
+	    },
 	    calculateEditorHeight: function (e) {
 	        e.currentTarget.style.height = 'auto';
 	        e.currentTarget.style.height = e.currentTarget.scrollHeight - 4 + 'px';
