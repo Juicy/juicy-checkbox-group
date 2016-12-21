@@ -142,12 +142,23 @@
                 width: 16px;
             }
 
+            #positionBullet {
+                margin: auto 2px auto 2px;
+                cursor: default;
+                width: 8px;
+            }
+
             #checkboxItem, #checkboxItemLabelEditor, #checkboxItemLabel {
                 box-sizing: content-box;
             }
         </style>
         <div id="container">
-            <div id="positionNumber">{{position}}</div>
+			<template is="dom-if" if="{{isBulletStyle(listItemStyle)}}">
+				<li id="positionBullet"/>
+			</template>
+			<template is="dom-if" if="{{isNumberStyle(listItemStyle)}}">
+				<div id="positionNumber">{{position}}</div>
+			</template>
 			<template is="dom-if" if="{{!checkboxHidden}}">
 				<div id="checkboxItemContainer">
 					<div id="checkboxItem" data-checkable$="{{checkable}}" data-checked$="{{checked}}" on-click="toggleCheckbox">
@@ -183,7 +194,8 @@
             editable: { type: Boolean, value: false },
             placeholder: {type: String, value: "Type item name here" },
             checked: { type: Boolean, value: false, notify: true},
-			checkboxHidden: { type: Boolean, value: false }
+			checkboxHidden: { type: Boolean, value: false },
+			listItemStyle: { type: String, value: "number", notify: true }
 	    },
 	    toggleCheckbox: function() {
 	        if (this.checkable) {
@@ -196,6 +208,12 @@
 	            }
 	        }
 	    },
+		isNumberStyle: function(style){
+			return style === 'number'
+		},
+		isBulletStyle: function(style){
+			return style === 'bullet'
+		},
 	    editorKeyPress: function (e) {
 	        if (e.key == "Enter" || e.keyCode == 13) {
 	            e.preventDefault();
