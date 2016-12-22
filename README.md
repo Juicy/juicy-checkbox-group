@@ -59,6 +59,7 @@ Name     | Options     | Default      | Description
 `editable`         | *boolean*    | false        | Switches item into editing mode (allows changing label)
 `placeholder`         | *string*    | Type item name here        | Label input placeholder, applies only if the item is in editing mode
 `checkboxHidden`         | *boolean*    | false        | Determines if checkbox is available for editing
+`listStyleType`         | *string* ('decimal', 'none', 'disc')   | 'decimal'        | Checkbox item style
 
 
 ## Events
