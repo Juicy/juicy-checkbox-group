@@ -153,10 +153,10 @@
             }
         </style>
         <div id="container">
-			<template is="dom-if" if="{{isBulletStyle(listItemStyle)}}">
+			<template is="dom-if" if="{{isDiscStyle(listStyleType)}}">
 				<li id="positionBullet"/>
 			</template>
-			<template is="dom-if" if="{{isNumberStyle(listItemStyle)}}">
+			<template is="dom-if" if="{{isDecimalStyle(listStyleType)}}">
 				<div id="positionNumber">{{position}}</div>
 			</template>
 			<template is="dom-if" if="{{!checkboxHidden}}">
@@ -195,7 +195,7 @@
             placeholder: {type: String, value: "Type item name here" },
             checked: { type: Boolean, value: false, notify: true},
 			checkboxHidden: { type: Boolean, value: false },
-			listItemStyle: { type: String, value: "number", notify: true }
+			listStyleType: { type: String, value: "decimal", notify: true }
 	    },
 	    toggleCheckbox: function() {
 	        if (this.checkable) {
@@ -208,11 +208,11 @@
 	            }
 	        }
 	    },
-		isNumberStyle: function(style){
-			return style === 'number'
+		isDecimalStyle: function(style){
+			return style === 'decimal'
 		},
-		isBulletStyle: function(style){
-			return style === 'bullet'
+		isDiscStyle: function(style){
+			return style === 'disc'
 		},
 	    editorKeyPress: function (e) {
 	        if (e.key == "Enter" || e.keyCode == 13) {
