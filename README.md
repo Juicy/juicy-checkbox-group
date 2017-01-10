@@ -1,4 +1,4 @@
-# &lt;juicy-checkbox-group&gt; [![Build Status](https://travis-ci.org/Juicy/juicy-checkbox-group.svg?branch=gh-pages)](https://travis-ci.org/Juicy/juicy-checkbox-group)
+# &lt;juicy-checkbox-group&gt; [![Build Status](https://travis-ci.org/Juicy/juicy-checkbox-group.svg?branch=master)](https://travis-ci.org/Juicy/juicy-checkbox-group)
 
 > Polymer element to create editable group of checkboxes.
 
@@ -14,7 +14,7 @@ Install the component using [Bower](http://bower.io/):
 $ bower install juicy-checkbox-group --save
 ```
 
-Or [download as ZIP](https://github.com/Juicy/juicy-checkbox-group/archive/gh-pages.zip).
+Or [download as ZIP](https://github.com/Juicy/juicy-checkbox-group/archive/master.zip).
 
 ## Usage
 
