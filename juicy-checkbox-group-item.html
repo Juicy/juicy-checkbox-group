@@ -161,7 +161,7 @@
             </template>
             <template is="dom-if" if="{{!checkboxHidden}}">
                 <div id="checkboxItemContainer">
-                    <div id="checkboxItem" data-checkable$="{{checkable}}" data-checked$="{{checked}}" on-click="toggleCheckbox">
+                    <div id="checkboxItem" data-checkable$="{{checkable}}" data-checked$="{{checked}}" on-click="toggleCheckbox" on-keypress="toggleCheckbox" tabindex="0">
                         <iron-icon class="icon" icon="icons:check"></iron-icon>
                     </div>
                 </div>
