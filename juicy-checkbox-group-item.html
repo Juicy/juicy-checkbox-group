@@ -161,14 +161,14 @@
             </template>
             <template is="dom-if" if="{{!checkboxHidden}}">
                 <div id="checkboxItemContainer">
-                    <div id="checkboxItem" data-checkable$="{{checkable}}" data-checked$="{{checked}}" on-click="toggleCheckbox">
+                    <div id="checkboxItem" data-checkable$="{{checkable}}" data-checked$="{{checked}}" on-click="toggleCheckbox" on-keydown="checkboxKeydown" tabindex="0">
                         <iron-icon class="icon" icon="icons:check"></iron-icon>
                     </div>
                 </div>
             </template>
             <div id="checkboxItemLabelContainer">
                 <template is="dom-if" if="{{editable}}">
-                    <textarea id="checkboxItemLabelEditor" on-keypress="editorKeyPress" value="{{label::input}}" on-keyup="calculateEditorHeight" placeholder="{{placeholder}}" rows="1">{{label}}</textarea>
+                    <textarea id="checkboxItemLabelEditor" on-keydown="editorKeydown" value="{{label::input}}" on-keyup="calculateEditorHeight" placeholder="{{placeholder}}" rows="1">{{label}}</textarea>
                 </template>
                 <template is="dom-if" if="{{!editable}}">
                     <div id="checkboxItemLabel" data-checkable$="{{checkable}}" on-click="toggleCheckbox">{{label}}</div>
@@ -241,13 +241,19 @@
                 }
             }
         },
+        checkboxKeydown: function(e) {
+	        if (e.key == "Space" || e.keyCode == 32) {
+		        this.toggleCheckbox();
+                e.preventDefault();
+            }
+        },
         isDecimalStyle: function(style) {
             return style === 'decimal'
         },
         isDiscStyle: function(style) {
             return style === 'disc'
         },
-        editorKeyPress: function(e) {
+        editorKeydown: function(e) {
             if (e.key == "Enter" || e.keyCode == 13) {
                 e.preventDefault();
                 this.fire('checkboxLabelEditorEnter', {"position": this.position});
